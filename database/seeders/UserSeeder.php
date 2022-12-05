@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Location;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -37,7 +38,15 @@ class UserSeeder extends Seeder
 
         $user->assignRole([$role->id]);
 
-// just insert one user data
+        Location::create([
+            'user_id' => $user->id,
+            'user_ip' => '127.0.0.1',
+            'login_at' => now(),
+        ]);
+
+
+
+        // just insert one user data
         $one_user = User::create([
             'first_name' => 'Faisal',
             'last_name' => 'Ahmmed',
@@ -45,7 +54,13 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'email_verified_at' => now(),
         ]);
-       $one_user->assignRole('User');
 
+        $one_user->assignRole('User');
+
+        Location::create([
+            'user_id' => $one_user->id,
+            'user_ip' => '127.0.0.1',
+            'login_at' => now(),
+        ]);
     }
 }

@@ -42,7 +42,8 @@ class AuthenticatedSessionController extends Controller
         // $auth_user = Auth::user();
         $user_ip = Location::where('user_id', Auth::user()->id)->first();
 
-        if (!$user_ip->user_ip == $request->ip) {
+        if (!$user_ip->user_ip === $request->ip) {
+
             Location::create([
                 'user_id' => Auth::user()->id,
                 'user_ip' => $request->ip(),
@@ -53,6 +54,7 @@ class AuthenticatedSessionController extends Controller
                 'ip' => $request->ip(),
                 'email' => Auth::user()->email,
             );
+
             Mail::send('access', $info, function ($message) use ($info) {
                 $message->from('developerfaisal32@gmail.com', 'Faisal Ahmmed');
                 $message->to($info['email']);
